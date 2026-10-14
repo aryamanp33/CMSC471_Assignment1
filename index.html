@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore income and life expectancy in the United States, 2001–2014.">
+  <title>The Price of Living Longer | CMSC471</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <p class="eyebrow">CMSC471 · Interactive Visualization</p>
+      <h1>The Price of Living Longer</h1>
+      <p class="subtitle">How does income relate to life expectancy in the United States, and how did that relationship change from 2001 to 2014?</p>
+    </header>
+
+    <section class="dashboard" aria-labelledby="explore-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Explore the data</p>
+          <h2 id="explore-heading">Income &amp; life expectancy</h2>
+        </div>
+        <button id="reset-button" class="reset-button" type="button">Reset selections ↺</button>
+      </div>
+
+      <div class="controls" aria-label="Visualization filters">
+        <label>Gender
+          <select id="gender-select">
+            <option value="M">Men</option>
+            <option value="F">Women</option>
+          </select>
+        </label>
+        <label>View year
+          <select id="year-select">
+            <option value="pooled">2001–2014 (pooled)</option>
+          </select>
+        </label>
+        <label>Life expectancy measure
+          <select id="metric-select">
+            <option value="le_raceadj">Race-adjusted</option>
+            <option value="le_agg">Unadjusted</option>
+          </select>
+        </label>
+        <label>Lower income percentile
+          <select id="low-select" aria-label="Lower income percentile"></select>
+        </label>
+        <label>Higher income percentile
+          <select id="high-select" aria-label="Higher income percentile"></select>
+        </label>
+      </div>
+
+      <div class="stat-grid" aria-label="Summary statistics">
+        <article class="stat-card">
+          <span class="stat-label">Lower-income life expectancy</span>
+          <strong id="low-stat" class="stat-value">—</strong>
+          <span id="low-stat-note" class="stat-note">—</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Higher-income life expectancy</span>
+          <strong id="high-stat" class="stat-value">—</strong>
+          <span id="high-stat-note" class="stat-note">—</span>
+        </article>
+        <article class="stat-card stat-card-accent">
+          <span class="stat-label">Life expectancy difference</span>
+          <strong id="gap-stat" class="stat-value">—</strong>
+          <span id="gap-stat-note" class="stat-note">—</span>
+        </article>
+      </div>
+
+      <div id="error-message" class="error-message" role="alert" hidden></div>
+
+      <div class="chart-grid">
+        <article class="chart-card">
+          <div class="chart-heading">
+            <h3>1. The income gradient</h3>
+            <p id="income-chart-subtitle">Expected age at death by household income percentile</p>
+          </div>
+          <div id="income-chart" class="chart" aria-label="Life expectancy across income percentiles"></div>
+          <p class="chart-help">Hover for details. Click the curve to change the nearest selected percentile.</p>
+        </article>
+
+        <article class="chart-card">
+          <div class="chart-heading">
+            <h3>2. How the gap changed</h3>
+            <p>Annual estimates for the two selected income percentiles</p>
+            <div class="legend">
+              <span><i class="legend-dot low-dot"></i><span id="low-legend">10th percentile</span></span>
+              <span><i class="legend-dot high-dot"></i><span id="high-legend">90th percentile</span></span>
+            </div>
+          </div>
+          <div id="trend-chart" class="chart" aria-label="Life expectancy over time for selected income percentiles"></div>
+          <p class="chart-help">Hover to compare yearly values. Click a year to view its income gradient on the left.</p>
+        </article>
+      </div>
+
+      <div class="insight-box" aria-live="polite">
+        <h3>What do these comparisons show?</h3>
+        <p id="current-insight"></p>
+        <p id="trend-insight"></p>
+      </div>
+      <p class="method-note"><strong>How to read the data:</strong> Life expectancy here means the <em>expected age at death for a person who has reached age 40</em>, not life expectancy at birth. The pooled estimates and individual-year estimates come from separate source tables. Income percentile does not necessarily represent the same dollar amount in every year.</p>
+    </section>
+
+    <section class="writeup" aria-labelledby="about-heading">
+      <h2 id="about-heading">About this project</h2>
+
+      <h3>Dataset &amp; question</h3>
+      <p>We explore the relationship between household income percentile and life expectancy among adults in the United States using data from the study <em>The Association Between Income and Life Expectancy in the United States, 2001–2014</em>. Table 1 provides national estimates pooled across years; Table 2 provides separate estimates for each year, gender, and income percentile. Our focus is whether the income-related life expectancy gap differs by gender and changes over time.</p>
+
+      <h3>Visual design &amp; interactions</h3>
+      <p>We use a line chart for the income gradient because income percentile has a natural ordering. A second line chart makes changes over time easy to compare. The same two selected income percentiles appear throughout the dashboard, with matching colors for their annual trends. We considered bar charts, but lines better communicate ordered relationships and changes over time.</p>
+      <ul>
+        <li><strong>Dynamic filtering (Category I):</strong> Change gender, year, life expectancy measure, and income percentiles using dropdowns.</li>
+        <li><strong>Linked selection (Category I):</strong> Clicking the income curve changes a comparison percentile and updates the trends; clicking a trend year updates the income chart.</li>
+        <li><strong>Details on demand (Category II):</strong> Hover over either chart to inspect exact values.</li>
+        <li><strong>Highlighting (Category II):</strong> Selected percentiles and the active year are emphasized with colored markers and guide lines.</li>
+      </ul>
+
+      <h3>Interpretation &amp; limitations</h3>
+      <p>The charts describe associations, not evidence that income alone causes a change in lifespan. These are estimates for people who have reached age 40, and annual estimates may fluctuate. The underlying observations cover 2001–2014, so the results should not be treated as current-day life expectancy figures. The race-adjusted and unadjusted measures are distinct estimates; the selector lets readers examine both without mixing them.</p>
+
+      <h3>Development process</h3>
+      <p></p>Complete before submitting</p>
+
+      <h3>AI usage</h3>
+      <p>Complete before submitting</p>
+
+      <h3>Data &amp; references</h3>
+      <ul class="references">
+        <li><a href="https://opportunityinsights.org/paper/lifeexpectancy/" target="_blank" rel="noopener noreferrer">Opportunity Insights: Health Inequality Project</a> — National Life Expectancy Estimates by Gender and Income Percentile (Table 1) and Life Expectancy Estimates by Year, Gender, and Income Percentile (Table 2).</li>
+      </ul>
+    </section>
+    <footer>CMSC471 · Assignment 1 · University of Maryland</footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
