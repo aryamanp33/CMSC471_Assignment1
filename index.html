@@ -10,18 +10,18 @@
 <body>
   <main class="container">
     <header class="page-header">
-      <p class="eyebrow">CMSC471 · Interactive Visualization</p>
       <h1>The Price of Living Longer</h1>
-      <p class="subtitle">How does income relate to life expectancy in the United States, and how did that relationship change from 2001 to 2014?</p>
+      <p class="subtitle">Analyzing the relationship between income and life expectancy in the United States (2001–2014)</p>
+      <p>By: Aarav Satashia and Aryaman Punshi</p>
     </header>
 
     <section class="dashboard" aria-labelledby="explore-heading">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Explore the data</p>
+          <p class="eyebrow">Data</p>
           <h2 id="explore-heading">Income &amp; life expectancy</h2>
         </div>
-        <button id="reset-button" class="reset-button" type="button">Reset selections ↺</button>
+        <button id="reset-button" class="reset-button" type="button">Reset</button>
       </div>
 
       <div class="controls" aria-label="Visualization filters">
@@ -31,21 +31,21 @@
             <option value="F">Women</option>
           </select>
         </label>
-        <label>View year
+        <label>Year
           <select id="year-select">
             <option value="pooled">2001–2014 (pooled)</option>
           </select>
         </label>
-        <label>Life expectancy measure
+        <label>Life Expectancy Measure
           <select id="metric-select">
             <option value="le_raceadj">Race-adjusted</option>
             <option value="le_agg">Unadjusted</option>
           </select>
         </label>
-        <label>Lower income percentile
+        <label>Lower Income Percentile
           <select id="low-select" aria-label="Lower income percentile"></select>
         </label>
-        <label>Higher income percentile
+        <label>Higher Income Percentile
           <select id="high-select" aria-label="Higher income percentile"></select>
         </label>
       </div>
@@ -73,16 +73,15 @@
       <div class="chart-grid">
         <article class="chart-card">
           <div class="chart-heading">
-            <h3>1. The income gradient</h3>
-            <p id="income-chart-subtitle">Expected age at death by household income percentile</p>
+            <h3>The income gradient</h3>
+            <p id="income-chart-subtitle">Expected Life Expectancy</p>
           </div>
           <div id="income-chart" class="chart" aria-label="Life expectancy across income percentiles"></div>
-          <p class="chart-help">Hover for details. Click the curve to change the nearest selected percentile.</p>
         </article>
 
         <article class="chart-card">
           <div class="chart-heading">
-            <h3>2. How the gap changed</h3>
+            <h3>Comparing the Gaps</h3>
             <p>Annual estimates for the two selected income percentiles</p>
             <div class="legend">
               <span><i class="legend-dot low-dot"></i><span id="low-legend">10th percentile</span></span>
@@ -90,7 +89,6 @@
             </div>
           </div>
           <div id="trend-chart" class="chart" aria-label="Life expectancy over time for selected income percentiles"></div>
-          <p class="chart-help">Hover to compare yearly values. Click a year to view its income gradient on the left.</p>
         </article>
       </div>
 
@@ -99,32 +97,33 @@
         <p id="current-insight"></p>
         <p id="trend-insight"></p>
       </div>
-      <p class="method-note"><strong>How to read the data:</strong> Life expectancy here means the <em>expected age at death for a person who has reached age 40</em>, not life expectancy at birth. The pooled estimates and individual-year estimates come from separate source tables. Income percentile does not necessarily represent the same dollar amount in every year.</p>
+      <p class="method-note"><strong>Note:</strong> Life expectancy here means the expected age at death for someone who has reached age 40.</p>
     </section>
 
     <section class="writeup" aria-labelledby="about-heading">
-      <h2 id="about-heading">About this project</h2>
+      <h2 id="about-heading">About Our Project</h2>
 
       <h3>Dataset &amp; question</h3>
-      <p>We explore the relationship between household income percentile and life expectancy among adults in the United States using data from the study <em>The Association Between Income and Life Expectancy in the United States, 2001–2014</em>. Table 1 provides national estimates pooled across years; Table 2 provides separate estimates for each year, gender, and income percentile. Our focus is whether the income-related life expectancy gap differs by gender and changes over time.</p>
+      <p>The dataset looks at how household income percentile relates to life expectancy among U.S. adults using data from <em>The Association Between Income and Life Expectancy in the United States, 2001–2014</em>. Table 1 combines data across multiple years to provide overall national estimates, while Table 2 breaks the estimates down by year, gender, and income percentiles. We focus on whether the life expectancy gap between higher and lower-income adults differs for men and women and how that gap changes over the years.</p>
 
       <h3>Visual design &amp; interactions</h3>
-      <p>We use a line chart for the income gradient because income percentile has a natural ordering. A second line chart makes changes over time easy to compare. The same two selected income percentiles appear throughout the dashboard, with matching colors for their annual trends. We considered bar charts, but lines better communicate ordered relationships and changes over time.</p>
+      <p>To visualize our data, we decided to choose a line chart to show how a person's life expectancy can vary with different income percentiles. A second line chart then shows how life expectancy changes over time for the two selected income groups. These selections remain consistent in the dashboard, with matching colors to make them easy to follow. We also considered bar charts to represent the data, but a line chart better shows the trends over time than a bar chart.</p>
+      <p><strong>Interactions Chosen:</strong></p>
       <ul>
-        <li><strong>Dynamic filtering (Category I):</strong> Change gender, year, life expectancy measure, and income percentiles using dropdowns.</li>
-        <li><strong>Linked selection (Category I):</strong> Clicking the income curve changes a comparison percentile and updates the trends; clicking a trend year updates the income chart.</li>
-        <li><strong>Details on demand (Category II):</strong> Hover over either chart to inspect exact values.</li>
-        <li><strong>Highlighting (Category II):</strong> Selected percentiles and the active year are emphasized with colored markers and guide lines.</li>
+        <li><strong>Dynamic Filtering:</strong> Added dropdown menus for the user to choose gender, year, life expectancy measure, and income percentiles.</li>
+        <li><strong>Linked Selection:</strong> Clicking the income gradient chart adjusts the comparison chart for the selected income percentile.</li>
+        <li><strong>Details on Demand:</strong> Hovering over either chart displays exact numerical values.</li>
+        <li><strong>Highlighting:</strong> Colored markers and guide lines show the selected income percentiles and year.</li>
       </ul>
 
       <h3>Interpretation &amp; limitations</h3>
-      <p>The charts describe associations, not evidence that income alone causes a change in lifespan. These are estimates for people who have reached age 40, and annual estimates may fluctuate. The underlying observations cover 2001–2014, so the results should not be treated as current-day life expectancy figures. The race-adjusted and unadjusted measures are distinct estimates; the selector lets readers examine both without mixing them.</p>
+      <p>The charts that were created show the relationship between income and life expectancy, but they don't prove that income solely determines how long a person lives. The estimates only apply to people who have reached age 40 and can vary every year. The dropdown lets users compare race-adjusted estimates, which account for differences in racial composition across income groups, with unadjusted estimates. Additionally, the data covers 2001–2014, so it cannot be used to represent life expectancy today because factors affecting life expectancy may have changed since then.</p>
 
       <h3>Development process</h3>
-      <p></p>Complete before submitting</p>
+      <p>We collaborated on most areas of Assignment 1 and discussed decisions to ensure we agreed on the direction of the project. Aryaman selected the dataset and variables we wanted to analyze. He also guided the initial design using techniques from our previous labs, including D3 scales, axes, and dropdown filtering. Aryaman developed much of the site and its two charts himself, using Codex assistance when needed, especially to debug the highlighting interactions and connections between the two datasets. We reviewed the resulting code and checked that the charts reflected the selected variables correctly. Aryaman also wrote the dataset introduction and published the GitHub Pages site. Aarav used Codex to help refine the code for readability and improve the dashboard styling. He also wrote most of the write-up, including the design rationale, development process, and AI usage sections, and recorded a live demonstration. Code development, debugging, and review took approximately 4 hours, while the write-up took approximately another 2 hours. Code development took the most time because it involved implementing our design decisions and debugging the interactions between the charts. Overall, we spent approximately 7–8 hours creating an interactive dashboard that explores income and life expectancy.</p>
 
       <h3>AI usage</h3>
-      <p>Complete before submitting</p>
+      <p>The main AI tool we used was Codex, which helped fill the gaps between what we learned in class and what we wanted to implement for this project. For example, after deciding to highlight the gap between selected income percentiles in the first graph, we used Codex to help update the highlighted area when users changed their selections. Similarly, Codex helped debug the connections between the two tables so that the charts displayed the correct information for the selected gender, year, and income percentiles, and helped make the dashboard more visually appealing with colors and useful guide lines that made the selections easier to follow. Most of the text was written by us, but ChatGPT helped with phrasing, grammatical corrections, and explaining our comparisons more clearly. We reviewed the resulting code and checked the charts and interactions for errors. This project showed us how we could combine what we learned in class with our own design choices and AI assistance to develop an interactive visualization.</p>
 
       <h3>Data &amp; references</h3>
       <ul class="references">
